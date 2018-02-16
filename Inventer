@@ -1,0 +1,54 @@
+<!-- :: Batch section
+@echo off
+setlocal
+
+echo Opening up Application:
+for /F "delims=" %%a in ('mshta.exe "%~F0"') do set "HTAreply=%%a"
+echo End of HTA window, reply: "%HTAreply%"
+goto :EOF
+-->
+
+
+<HTML>
+<HEAD>
+<HTA:APPLICATION
+     APPLICATIONNAME="ABB Ultra: Data Examiner Ver:1"
+	 ID="objTest" 
+     SCROLL="yes" 
+	 SYSMENU="yes" 
+	 WindowState="normal"
+	 SINGLEINSTANCE="yes"
+	 MinimizeButton="yes"
+	 MaximizeButton="yes"
+>
+</HEAD>
+<TITLE>ABB Ultra: Data Examiner Ver:1</TITLE>
+<SCRIPT language="VBScript">
+window.resizeTo(374,200);
+
+function Data(reply){
+   var fso = new ActiveXObject("Scripting.FileSystemObject");
+   fso.GetStandardStream(1).WriteLine(reply);
+   window.close();
+}
+
+
+Sub TestSub
+    For Each objButton in RadioOption
+        If objButton.Checked Then
+            Msgbox "You selected Option " & objButton.Value & "."
+        End If
+    Next
+End Sub
+
+
+</SCRIPT>
+
+<BODY>
+	<input type="radio" name="RadioOption" value="1">Option 1<BR>
+	<input type="radio" name="RadioOption" value="2">Option 2<BR>
+	<input type="radio" name="RadioOption" value="3">Option 3<P>
+	<input id=runbutton  class="button" type="button" value="Run" name="run_button" onClick="RadioOption">
+	
+</BODY>
+</HTML>
